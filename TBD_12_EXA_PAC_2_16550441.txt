@@ -1,0 +1,24 @@
+select a.actor_id, a.first_name, a.last_name, sum(e.amount) as total from actor a inner join
+film_actor b on a.actor_id = b.actor_id 
+inner join inventory c on c.film_id = b.film_id
+inner join rental d on d.inventory_id = c.inventory_id
+inner join payment e on e.rental_id = d.rental_id limit 3;
+
+
+
+||||||	  Relaciones	|||||
+actor->[actor_id]<-film_actor->[film_id]<-inventory->[inventory_id]<-rental->[rental_id]<-payment <--- amount
+
+
+||	  Pruebas	||
+select a.actor_id, a.first_name, a.last_name, last_update from actor a 
+inner join film_actor b on a.actor_id = b.actor_id 
+inner join inventory c on c.film_id = b.film_id order by a.actor_id limit 10;
+
+
+||	Resultado erroneo 	||
++----------+------------+-----------+-----------+
+| actor_id | first_name | last_name | total     |
++----------+------------+-----------+-----------+
+|        1 | PENELOPE   | GUINESS   | 367559.07 |
++----------+------------+-----------+-----------+
